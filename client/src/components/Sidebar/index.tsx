@@ -1,7 +1,9 @@
 "use client";
 
-import { LockIcon } from "lucide-react";
+import { Home, LockIcon, LucideIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
 const sidebarClassNames = `fixed flex flex-col justify-between shadow-xl transition-all duration-300 h-full z-40 dark:bg-black overflow-y-auto bg-white w-64`;
@@ -36,8 +38,42 @@ const Sidebar = () => {
         </div>
 
         {/* NAVBAR LINKS */}
+        <nav className="z-10 w-full">
+          <SidebarLink icon={Home} label="Home" href="/" />
+        </nav>
       </div>
     </div>
+  );
+};
+
+interface SidebarLinkProps {
+  href: string;
+  icon: LucideIcon;
+  label: string;
+}
+
+const SidebarLink = ({ href, icon: Icon, label }: SidebarLinkProps) => {
+  const pathname = usePathname();
+  const isActive =
+    pathname === href || (pathname === "/" && href === "/dashboard");
+
+  return (
+    <Link href={href} className="w-full">
+      <div
+        className={`relative flex cursor-pointer items-center gap-3 transition-colors hover:bg-gray-100 dark:bg-black dark:hover:bg-gray-700 ${
+          isActive ? "bg-gray-100 text-white dark:bg-gray-600" : ""
+        }`}
+      >
+        {isActive && (
+          <div className="absolute left-0 top-0 h-full w-[5px] bg-blue-200" />
+        )}
+
+        <Icon className="h-6 w-6 text-gray-800 dark:text-gray-100" />
+        <span className="font-medium text-gray-800 dark:text-gray-100">
+          {label}
+        </span>
+      </div>
+    </Link>
   );
 };
 
