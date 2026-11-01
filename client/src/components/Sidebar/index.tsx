@@ -1,16 +1,25 @@
 "use client";
 
-import { Home, LockIcon, LucideIcon } from "lucide-react";
+import { useAppDispatch, useAppSelector } from "@/app/redux";
+import { setIsSidebarCollapsed } from "@/state";
+import { Home, LockIcon, LucideIcon, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
-const sidebarClassNames = `fixed flex flex-col justify-between shadow-xl transition-all duration-300 h-full z-40 dark:bg-black overflow-y-auto bg-white w-64`;
-
 const Sidebar = () => {
   const [showProjects, setShowProjects] = useState(true);
   const [showPriority, setShowPriority] = useState(true);
+
+  const dispatch = useAppDispatch();
+  const isSidebarCollapsed = useAppSelector(
+    (state) => state.global.isSidebarCollapsed,
+  );
+
+  const sidebarClassNames = `fixed flex flex-col justify-between shadow-xl transition-all duration-300 h-full z-40 dark:bg-black overflow-y-auto bg-white ${
+    isSidebarCollapsed ? "w-0 hidden" : "w-64"
+  }`;
 
   return (
     <div className={sidebarClassNames}>
@@ -20,6 +29,17 @@ const Sidebar = () => {
           <div className="text-xl font-bold text-gray-800 dark:text-white">
             DACSLIST
           </div>
+
+          {isSidebarCollapsed ? null : (
+            <button
+              className="py-3"
+              onClick={() =>
+                dispatch(setIsSidebarCollapsed(!isSidebarCollapsed))
+              }
+            >
+              <X className="h-6 w-6 text-gray-800 hover:text-gray-500 dark:text-white" />
+            </button>
+          )}
         </div>
 
         {/* TEAM */}
