@@ -3,14 +3,19 @@
 import { useAppDispatch, useAppSelector } from "@/app/redux";
 import { setIsSidebarCollapsed } from "@/state";
 import {
+  AlertCircle,
+  AlertOctagon,
+  AlertTriangle,
   Briefcase,
   ChevronDown,
   ChevronUp,
   Home,
+  Layers3,
   LockIcon,
   LucideIcon,
   Search,
   Settings,
+  ShieldAlert,
   User,
   Users,
   X,
@@ -108,6 +113,31 @@ const Sidebar = () => {
           )}
         </button>
         {/* PRIORITIES LIST */}
+        {showPriority && (
+          <>
+            <SidebarLink
+              icon={AlertCircle}
+              label="Urgent"
+              href="/priority/urgent"
+            />
+            <SidebarLink
+              icon={ShieldAlert}
+              label="High"
+              href="/priority/high"
+            />
+            <SidebarLink
+              icon={AlertTriangle}
+              label="Medium"
+              href="/priority/medium"
+            />
+            <SidebarLink icon={AlertOctagon} label="Low" href="/priority/low" />
+            <SidebarLink
+              icon={Layers3}
+              label="Backlog"
+              href="/priority/backlog"
+            />
+          </>
+        )}
       </div>
     </div>
   );
