@@ -19,6 +19,11 @@
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.3",
+    "helmet": "^7.2.0",
+    "morgan": "^1.12.1",
     "prisma": "^5.22.0"
   }
 }
