@@ -5,6 +5,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 
 /* ROUTE IMPORTS */
+import projectRoutes from "./routes/projectRoutes";
 
 /* CONFIGURATION */
 dotenv.config();
@@ -35,6 +36,8 @@ app.use(
 app.get("/", (req, res) => {
   res.send("This is home route");
 });
+
+app.use("/projects", projectRoutes);
 
 /* START SERVER */
 app.listen(PORT, () => {
