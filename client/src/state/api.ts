@@ -71,7 +71,15 @@ export const api = createApi({
       transformResponse: (response: { success: boolean; data: Project[] }) =>
         response.data,
     }),
+    createProject: build.mutation<Project, Partial<Project>>({
+      query: (project) => ({
+        url: "projects",
+        method: "POST",
+        body: project,
+      }),
+      invalidatesTags: ["Projects"],
+    }),
   }),
 });
 
-export const { useGetProjectsQuery } = api;
+export const { useGetProjectsQuery, useCreateProjectMutation } = api;
