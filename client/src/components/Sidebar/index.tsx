@@ -2,6 +2,7 @@
 
 import { useAppDispatch, useAppSelector } from "@/app/redux";
 import { setIsSidebarCollapsed } from "@/state";
+import { useGetProjectsQuery } from "@/state/api";
 import {
   AlertCircle,
   AlertOctagon,
@@ -37,6 +38,8 @@ const Sidebar = () => {
   const sidebarClassNames = `fixed flex flex-col justify-between shadow-xl transition-all duration-300 h-full z-40 dark:bg-black overflow-y-auto bg-white ${
     isSidebarCollapsed ? "w-0 hidden" : "w-64"
   }`;
+
+  const { data: projects, isLoading, error } = useGetProjectsQuery();
 
   return (
     <div className={sidebarClassNames}>
@@ -98,6 +101,15 @@ const Sidebar = () => {
           )}
         </button>
         {/* PROJECTS LIST */}
+        {showProjects &&
+          projects?.map(({ id, name }) => (
+            <SidebarLink
+              key={id}
+              icon={Briefcase}
+              label={name}
+              href={`/projects/${id}`}
+            />
+          ))}
 
         {/* PRIORITIES LINKS */}
         <button
