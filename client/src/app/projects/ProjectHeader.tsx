@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import { Clock, Grid3X3, List, Table } from "lucide-react";
+import { Clock, Grid3X3, List, LucideIcon, Table } from "lucide-react";
 import React, { useState } from "react";
 
 type Props = {
@@ -23,25 +23,25 @@ const ProjectHeader = ({ activeTab, setActiveTab }: Props) => {
         <div className="flex flex-1 items-center gap-2 md:gap-4">
           <TabButton
             name="Board"
-            icon={<Grid3X3 className="h-5 w-5" />}
+            icon={Grid3X3}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />
           <TabButton
             name="List"
-            icon={<List className="h-5 w-5" />}
+            icon={List}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />
           <TabButton
             name="Timeline"
-            icon={<Clock className="h-5 w-5" />}
+            icon={Clock}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />
           <TabButton
             name="Table"
-            icon={<Table className="h-5 w-5" />}
+            icon={Table}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />
@@ -53,12 +53,17 @@ const ProjectHeader = ({ activeTab, setActiveTab }: Props) => {
 
 type TabButtonProps = {
   name: string;
-  icon: React.ReactNode;
+  icon: LucideIcon;
   activeTab: string;
   setActiveTab: (tabName: string) => void;
 };
 
-const TabButton = ({ name, icon, activeTab, setActiveTab }: TabButtonProps) => {
+const TabButton = ({
+  name,
+  icon: Icon,
+  activeTab,
+  setActiveTab,
+}: TabButtonProps) => {
   const isActive = activeTab === name;
 
   return (
@@ -68,8 +73,8 @@ const TabButton = ({ name, icon, activeTab, setActiveTab }: TabButtonProps) => {
       }`}
       onClick={() => setActiveTab(name)}
     >
-      {icon}
-      {name}
+      <Icon className={`h-5 w-5 ${isActive ? "text-blue-600" : ""}`} />
+      <span className={`${isActive ? "text-blue-600" : ""}`}>{name}</span>
     </button>
   );
 };
