@@ -3,10 +3,12 @@ import {
   useUpdateTaskStatusByIdMutation,
 } from "@/state/api";
 import React from "react";
-import { DndProvider, useDrop } from "react-dnd";
+import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Task as TaskType } from "@/state/api";
-import { EllipsisVertical, Plus } from "lucide-react";
+import { EllipsisVertical, MessageSquareMore, Plus } from "lucide-react";
+import { format } from "date-fns";
+import Image from "next/image";
 
 type BoardProps = {
   id: string;
@@ -116,8 +118,165 @@ const TaskColumn = ({
           </div>
         </div>
       </div>
+
+      {tasks
+        .filter((task) => task.status === status)
+        .map((task) => (
+          <Task key={task.id} task={task} />
+        ))}
     </div>
   );
 };
+
+type TaskProps = {
+  task: TaskType;
+};
+
+const Task = ({
+  task: {
+    id,
+    tags,
+    startDate,
+    dueDate,
+    comments,
+    attachments,
+    priority,
+    title,
+    points,
+    description,
+    assignee,
+    author,
+  },
+}: TaskProps) => {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: "task",
+    item: { id },
+    collect: (monitor: any) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
+
+  const taskTagsSplit = tags ? tags.split(",") : [];
+
+  const formattedStartDate = startDate ? format(new Date(startDate), "P") : "";
+  const formattedDueDate = dueDate ? format(new Date(dueDate), "P") : "";
+
+  const numberOfComments = (comments && comments.length) || 0;
+
+  return (
+    <div
+      ref={(instance) => {
+        drag(instance);
+      }}
+      className={`mb-4 rounded-md bg-white shadow dark:bg-dark-secondary ${
+        isDragging ? "opacity-50" : "opacity-100"
+      }`}
+    >
+      {attachments && attachments.length > 0 && (
+        <Image
+          src={`/${attachments[0].fileURL}`}
+          alt={`/${attachments[0].fileName}`}
+          width={400}
+          height={200}
+          className="h-auto w-full rounded-t-md"
+        />
+      )}
+
+      <div className="p-4 md:p-6">
+        <div className="flex items-start justify-between">
+          <div className="flex flex-1 flex-wrap items-center gap-2">
+            {priority && <PriorityTag priority={priority} />}
+
+            <div className="flex gap-2">
+              {taskTagsSplit.map((tag) => (
+                <div
+                  key={tag}
+                  className="rounded-full bg-blue-100 px-2 py-1 text-xs"
+                >
+                  {""}
+                  {tag}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <button className="flex h-6 w-4 flex-shrink-0 items-center justify-center dark:text-neutral-500">
+            <EllipsisVertical size={26} />
+          </button>
+        </div>
+
+        <div className="my-3 flex justify-between">
+          <h4 className="text-md font-bold dark:text-white">{title}</h4>
+
+          {typeof points === "number" && (
+            <div className="text-xs font-semibold dark:text-white">
+              {points} pts
+            </div>
+          )}
+        </div>
+
+        <div className="text-xs text-gray-500 dark:text-neutral-500">
+          {formattedStartDate && <span>{formattedStartDate} - </span>}
+          {formattedDueDate && <span>{formattedDueDate}</span>}
+        </div>
+
+        <p className="text-sm text-gray-600 dark:text-neutral-500">
+          {description}
+        </p>
+
+        <div className="mt-4 border-t border-gray-200 dark:border-stroke-dark" />
+
+        {/* Users */}
+        <div className="mt-3 flex items-center justify-between">
+          <div className="flex -space-x-[6px] overflow-hidden">
+            {assignee && (
+              <Image
+                src={`/${assignee.profilePictureUrl!}`}
+                alt={`/${assignee.username}`}
+                width={30}
+                height={30}
+                className="h-8 w-8 rounded-full border-2 border-white object-cover dark:border-dark-secondary"
+              />
+            )}
+            {author && (
+              <Image
+                src={`/${author.profilePictureUrl!}`}
+                alt={`/${author.username}`}
+                width={30}
+                height={30}
+                className="h-8 w-8 rounded-full border-2 border-white object-cover dark:border-dark-secondary"
+              />
+            )}
+          </div>
+
+          <div className="flex items-center text-gray-500 dark:text-neutral-500">
+            <MessageSquareMore size={20} />
+            <span className="ml-1 text-sm dark:text-neutral-400">
+              {numberOfComments}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const PriorityTag = ({ priority }: { priority: TaskType["priority"] }) => (
+  <div
+    className={`rounded-full px-2 py-1 text-xs font-semibold ${
+      priority === "Urgent"
+        ? "bg-red-200 text-red-700"
+        : priority === "High"
+          ? "bg-yellow-200 text-yellow-700"
+          : priority === "Medium"
+            ? "bg-green-200 text-green-700"
+            : priority === "Low"
+              ? "bg-blue-200 text-blue-700"
+              : "bg-gray-200 text-gray-700"
+    }`}
+  >
+    {priority}
+  </div>
+);
 
 export default BoardView;
