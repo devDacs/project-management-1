@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import { setLastActiveProjectTab } from "@/state";
 import {
   Clock,
   Filter,
@@ -9,13 +10,14 @@ import {
   Table,
 } from "lucide-react";
 import React, { useState } from "react";
+import { useAppDispatch } from "../redux";
 
 type Props = {
   activeTab: string;
-  setActiveTab: (tabName: string) => void;
 };
 
-const ProjectHeader = ({ activeTab, setActiveTab }: Props) => {
+const ProjectHeader = ({ activeTab }: Props) => {
+  const dispatch = useAppDispatch();
   const [isModalNewProjectOpen, setIsModalNewProjectOpen] = useState(false);
 
   return (
@@ -33,25 +35,25 @@ const ProjectHeader = ({ activeTab, setActiveTab }: Props) => {
             name="Board"
             icon={Grid3X3}
             activeTab={activeTab}
-            setActiveTab={setActiveTab}
+            setActiveTab={() => dispatch(setLastActiveProjectTab("Board"))}
           />
           <TabButton
             name="List"
             icon={List}
             activeTab={activeTab}
-            setActiveTab={setActiveTab}
+            setActiveTab={() => dispatch(setLastActiveProjectTab("List"))}
           />
           <TabButton
             name="Timeline"
             icon={Clock}
             activeTab={activeTab}
-            setActiveTab={setActiveTab}
+            setActiveTab={() => dispatch(setLastActiveProjectTab("Timeline"))}
           />
           <TabButton
             name="Table"
             icon={Table}
             activeTab={activeTab}
-            setActiveTab={setActiveTab}
+            setActiveTab={() => dispatch(setLastActiveProjectTab("Table"))}
           />
         </div>
 
