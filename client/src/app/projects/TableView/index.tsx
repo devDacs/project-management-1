@@ -5,6 +5,7 @@ import React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { format } from "date-fns";
 import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
+import Image from "next/image";
 
 type Props = {
   id: string;
@@ -70,26 +71,68 @@ const columns: GridColDef[] = [
     field: "startDate",
     headerName: "Start Date",
     width: 130,
-    renderCell: (params) => format(new Date(params.value), "P"),
+    renderCell: ({ value }) => format(new Date(value), "P"),
   },
   {
     field: "dueDate",
     headerName: "Due Date",
     width: 130,
-    renderCell: (params) => format(new Date(params.value), "P"),
+    renderCell: ({ value }) => format(new Date(value), "P"),
   },
   {
     field: "author",
     headerName: "Author",
-    width: 150,
-    renderCell: (params) => params.value.username || "Unknown",
+    width: 100,
+    renderCell: ({ value }) =>
+      !value ? (
+        "Unknown"
+      ) : (
+        <div className="flex h-full w-full items-center justify-center">
+          <div className="h-9 w-9">
+            <Image
+              src={`/${value.profilePictureUrl!}`}
+              alt={value.username}
+              width={100}
+              height={50}
+              className="h-full rounded-full object-cover"
+            />
+          </div>
+        </div>
+      ),
   },
   {
     field: "assignee",
     headerName: "Assignee",
-    width: 150,
-    renderCell: (params) => params.value?.username || "Unassigned",
+    width: 100,
+    renderCell: ({ value }) =>
+      !value ? (
+        "Unassigned"
+      ) : (
+        <div className="flex h-full w-full items-center justify-center">
+          <div className="h-9 w-9">
+            <Image
+              src={`/${value.profilePictureUrl!}`}
+              alt={value.username}
+              width={100}
+              height={50}
+              className="h-full rounded-full object-cover"
+            />
+          </div>
+        </div>
+      ),
   },
+  // {
+  //   field: "author",
+  //   headerName: "Author",
+  //   width: 150,
+  //   renderCell: ({ value: { username } }) => username || "Unknown",
+  // },
+  // {
+  //   field: "assignee",
+  //   headerName: "Assignee",
+  //   width: 150,
+  //   renderCell: ({ value }) => value?.username || "Unassigned",
+  // },
 ];
 
 const TableView = ({ id, setIsModalNewTaskOpen }: Props) => {
