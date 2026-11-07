@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import ProjectHeader from "@/app/projects/ProjectHeader";
 import Board from "../BoardView";
 import List from "../ListView";
+import Timeline from "../TimelineView";
 import { useAppSelector } from "@/app/redux";
 
 type Props = {
@@ -27,6 +28,9 @@ const Project = ({ params: { id } }: Props) => {
       )}
       {activeTab === "List" && (
         <List id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
+      )}
+      {activeTab === "Timeline" && (
+        <Timeline id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
       )}
     </div>
   );
