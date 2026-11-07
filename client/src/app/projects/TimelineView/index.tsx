@@ -3,6 +3,7 @@ import { useGetTasksByProjectIdQuery } from "@/state/api";
 import React, { useMemo, useState } from "react";
 import { DisplayOption, Gantt, ViewMode } from "gantt-task-react";
 import "gantt-task-react/dist/index.css";
+import Button from "@/components/Button";
 
 type Props = {
   id: string;
@@ -83,12 +84,10 @@ const TimelineView = ({ id, setIsModalNewTaskOpen }: Props) => {
         </div>
 
         <div className="px-4 pb-5 pt-1">
-          <button
-            className="flex items-center rounded bg-blue-primary px-3 py-2 text-white hover:bg-blue-600"
+          <Button
+            label="Add New Task"
             onClick={() => setIsModalNewTaskOpen(true)}
-          >
-            Add New Task
-          </button>
+          />
         </div>
       </div>
     </div>

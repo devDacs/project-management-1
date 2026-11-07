@@ -6,11 +6,13 @@ import {
   Grid3X3,
   List,
   LucideIcon,
+  PlusSquare,
   Share2,
   Table,
 } from "lucide-react";
 import React, { useState } from "react";
 import { useAppDispatch } from "../redux";
+import Button from "@/components/Button";
 
 type Props = {
   activeTab: string;
@@ -25,7 +27,18 @@ const ProjectHeader = ({ activeTab }: Props) => {
       {/* MODAL NEW PROJECT */}
 
       <div className="py-6 lg:pb-4 lg:pt-8">
-        <Header name="Product Design Development" />
+        <Header
+          name="Product Design Development"
+          buttonComponent={
+            <Button
+              label="New Boards"
+              icon={PlusSquare}
+              iconClassname="mr-2 h-5 w-5"
+              onClick={() => setIsModalNewProjectOpen(true)}
+              withLabel
+            />
+          }
+        />
       </div>
 
       {/* TABS */}
