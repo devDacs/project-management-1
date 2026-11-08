@@ -6,6 +6,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { format } from "date-fns";
 import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
 import Image from "next/image";
+import Button from "@/components/Button";
 
 type Props = {
   id: string;
@@ -146,7 +147,16 @@ const TableView = ({ id, setIsModalNewTaskOpen }: Props) => {
   return (
     <div className="h-[540px] w-full px-4 pb-8 xl:px-6">
       <div className="pt-5">
-        <Header name="Table" isSmallText />
+        <Header
+          name="Table"
+          isSmallText
+          buttonComponent={
+            <Button
+              label="Add New Task"
+              onClick={() => setIsModalNewTaskOpen(true)}
+            />
+          }
+        />
       </div>
 
       <DataGrid
