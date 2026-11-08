@@ -13,6 +13,7 @@ import {
 import React, { useState } from "react";
 import { useAppDispatch } from "../redux";
 import Button from "@/components/Button";
+import ModalNewProject from "./ModalNewProject";
 
 type Props = {
   activeTab: string;
@@ -25,6 +26,10 @@ const ProjectHeader = ({ activeTab }: Props) => {
   return (
     <div className="px-4 xl:px-6">
       {/* MODAL NEW PROJECT */}
+      <ModalNewProject
+        isOpen={isModalNewProjectOpen}
+        onClose={() => setIsModalNewProjectOpen(false)}
+      />
 
       <div className="py-6 lg:pb-4 lg:pt-8">
         <Header
