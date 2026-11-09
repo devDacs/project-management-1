@@ -141,6 +141,15 @@ export const api = createApi({
         response.data,
       providesTags: ["Teams"],
     }),
+    getTasksByUserId: build.query<Task[], number>({
+      query: (userId) => `tasks/user/${userId}`,
+      transformResponse: (response: { success: boolean; data: Task[] }) =>
+        response.data,
+      providesTags: (result, error, userId) =>
+        result
+          ? result.map(({ id }) => ({ type: "Tasks", id }))
+          : [{ type: "Tasks", id: userId }],
+    }),
   }),
 });
 
@@ -153,4 +162,5 @@ export const {
   useSearchQuery,
   useGetUsersQuery,
   useGetTeamsQuery,
+  useGetTasksByUserIdQuery,
 } = api;
