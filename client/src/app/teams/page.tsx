@@ -12,15 +12,54 @@ import {
   GridToolbarFilterButton,
 } from "@mui/x-data-grid";
 import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
+import Image from "next/image";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "Team ID", width: 100 },
   { field: "teamName", headerName: "Team Name", width: 200 },
-  { field: "productOwnerUsername", headerName: "Product Owner", width: 200 },
   {
-    field: "projectManagerUsername",
+    field: "productOwner",
+    headerName: "Product Owner",
+    width: 150,
+    renderCell: ({ row: { productOwner } }) => (
+      <div className="flex h-full w-full items-center justify-center">
+        <div className="h-9 w-9">
+          {!productOwner ? (
+            "Unassigned"
+          ) : (
+            <Image
+              src={`/${productOwner?.profilePictureUrl}`}
+              alt={productOwner?.username}
+              width={100}
+              height={50}
+              className="h-full rounded-full object-cover"
+            />
+          )}
+        </div>
+      </div>
+    ),
+  },
+  {
+    field: "projectManager",
     headerName: "Project Manager",
-    width: 200,
+    width: 150,
+    renderCell: ({ row: { projectManager } }) => (
+      <div className="flex h-full w-full items-center justify-center">
+        <div className="h-9 w-9">
+          {!projectManager ? (
+            "Unassigned"
+          ) : (
+            <Image
+              src={`/${projectManager?.profilePictureUrl}`}
+              alt={projectManager?.username}
+              width={100}
+              height={50}
+              className="h-full rounded-full object-cover"
+            />
+          )}
+        </div>
+      </div>
+    ),
   },
 ];
 
