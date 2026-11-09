@@ -21,12 +21,12 @@ const columns: GridColDef[] = [
     field: "profilePictureUrl",
     headerName: "Profile Picture",
     width: 150,
-    renderCell: (params) => (
+    renderCell: ({ value, row: { username } }) => (
       <div className="flex h-full w-full items-center justify-center">
         <div className="h-9 w-9">
           <Image
-            src={`/${params.value}`}
-            alt={params.row.username}
+            src={`/${value}`}
+            alt={username}
             width={100}
             height={50}
             className="h-full rounded-full object-cover"
