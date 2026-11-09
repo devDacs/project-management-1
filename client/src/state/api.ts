@@ -70,7 +70,7 @@ export interface Team {
   teamId: number;
   teamName: string;
   productOwnerUserId?: number;
-  projectManagerUserId: number;
+  projectManagerUserId?: number;
 }
 
 export const api = createApi({
