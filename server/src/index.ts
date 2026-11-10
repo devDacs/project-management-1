@@ -30,11 +30,7 @@ app.use(
 
 app.use(morgan("common"));
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-  }),
-);
+app.use(cors());
 
 /* ROUTES */
 app.get("/", (req, res) => {
