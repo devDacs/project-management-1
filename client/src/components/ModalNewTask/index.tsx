@@ -4,7 +4,7 @@ import Modal from "../Modal";
 import { Priority, Status, useCreateTaskMutation } from "@/state/api";
 
 type Props = {
-  id: string;
+  id?: string | null;
   isOpen: boolean;
   onClose: () => void;
 };
@@ -15,7 +15,7 @@ const inputStyles =
 const selectStyles =
   "mb-4 block w-full rounded border-gray-300 px-3 py-2 dark:border-dark-tertiary dark:bg-dark-tertiary dark:text-white dark:focus:outline-none";
 
-const ModalNewTask = ({ id, isOpen, onClose }: Props) => {
+const ModalNewTask = ({ id = null, isOpen, onClose }: Props) => {
   const [createTask, { isLoading }] = useCreateTaskMutation();
 
   const [title, setTitle] = useState("");
@@ -27,9 +27,10 @@ const ModalNewTask = ({ id, isOpen, onClose }: Props) => {
   const [dueDate, setDueDate] = useState("");
   const [authorUserId, setAuthorUserId] = useState("");
   const [assignedUserId, setAssignedUserId] = useState("");
+  const [projectId, setProjectId] = useState("");
 
   const handleSubmit = async () => {
-    if (!title || !authorUserId) {
+    if (!title || !authorUserId || !(id || projectId)) {
       return;
     }
 
@@ -50,12 +51,12 @@ const ModalNewTask = ({ id, isOpen, onClose }: Props) => {
       dueDate: formattedDueDate,
       authorUserId: parseInt(authorUserId),
       assignedUserId: parseInt(assignedUserId),
-      projectId: Number(id),
+      projectId: id ? Number(id) : Number(projectId),
     });
   };
 
   const isFormValid = () => {
-    return title && authorUserId;
+    return title && authorUserId && (id || projectId);
   };
 
   return (
@@ -125,6 +126,15 @@ const ModalNewTask = ({ id, isOpen, onClose }: Props) => {
             onChange={(e) => setDueDate(e.target.value)}
           />
         </div>
+        {!id && (
+          <input
+            type="text"
+            className={inputStyles}
+            placeholder="Project ID"
+            value={projectId}
+            onChange={(e) => setProjectId(e.target.value)}
+          />
+        )}
         <input
           type="text"
           className={inputStyles}

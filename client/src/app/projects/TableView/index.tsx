@@ -28,7 +28,7 @@ const priorityColors = (priority: string) => {
   return "bg-gray-100 text-gray-800";
 };
 
-const columns: GridColDef[] = [
+export const columns: GridColDef[] = [
   {
     field: "title",
     headerName: "Title",
