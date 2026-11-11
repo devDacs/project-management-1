@@ -13,22 +13,37 @@ Amplify.configure({
   },
 });
 
+const formFields = {
+  signUp: {
+    username: {
+      order: 1,
+      placeholder: "Choose a username",
+      label: "Username",
+      inputProps: { required: true },
+    },
+    email: {
+      order: 2,
+      placeholder: "Enter your email address",
+      label: "Email",
+      inputProps: { required: true, type: "email" },
+    },
+    password: {
+      order: 3,
+      placeholder: "Enter your password",
+      label: "Password",
+      inputProps: { required: true, type: "password" },
+    },
+    confirm_password: {
+      order: 4,
+      placeholder: "Confirm your password",
+      label: "Confirm Password",
+      inputProps: { required: true, type: "password" },
+    },
+  },
+};
+
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div className="mt-5">
-      <Authenticator>
-        {({ user }) =>
-          user ? (
-            <div>{children}</div>
-          ) : (
-            <div>
-              <h1>Please sign in below:</h1>
-            </div>
-          )
-        }
-      </Authenticator>
-    </div>
-  );
+  return <Authenticator formFields={formFields}>{children}</Authenticator>;
 };
 
 export default AuthProvider;
