@@ -11,7 +11,7 @@ const UserCard = ({ user: { profilePictureUrl, username, email } }: Props) => {
     <div className="mb-3 flex items-center gap-4 rounded bg-white p-4 shadow dark:bg-dark-secondary dark:text-white">
       {profilePictureUrl && (
         <Image
-          src={`/${profilePictureUrl}`}
+          src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${profilePictureUrl}`}
           alt={username}
           width={32}
           height={32}

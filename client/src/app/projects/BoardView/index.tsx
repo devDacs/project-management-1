@@ -174,8 +174,8 @@ const Task = ({
     >
       {attachments && attachments.length > 0 && (
         <Image
-          src={`/${attachments[0].fileURL}`}
-          alt={`/${attachments[0].fileName}`}
+          src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${attachments[0].fileURL}`}
+          alt={attachments[0].fileName}
           width={400}
           height={200}
           className="h-auto w-full rounded-t-md"
@@ -231,8 +231,8 @@ const Task = ({
           <div className="flex -space-x-[6px] overflow-hidden">
             {assignee && (
               <Image
-                src={`/${assignee.profilePictureUrl!}`}
-                alt={`/${assignee.username}`}
+                src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${assignee.profilePictureUrl!}`}
+                alt={assignee.username}
                 width={30}
                 height={30}
                 className="h-8 w-8 rounded-full border-2 border-white object-cover dark:border-dark-secondary"
@@ -240,8 +240,8 @@ const Task = ({
             )}
             {author && (
               <Image
-                src={`/${author.profilePictureUrl!}`}
-                alt={`/${author.username}`}
+                src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${author.profilePictureUrl!}`}
+                alt={author.username}
                 width={30}
                 height={30}
                 className="h-8 w-8 rounded-full border-2 border-white object-cover dark:border-dark-secondary"

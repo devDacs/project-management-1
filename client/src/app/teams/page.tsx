@@ -28,7 +28,7 @@ const columns: GridColDef[] = [
             "Unassigned"
           ) : (
             <Image
-              src={`/${productOwner?.profilePictureUrl}`}
+              src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${productOwner?.profilePictureUrl}`}
               alt={productOwner?.username}
               width={100}
               height={50}
@@ -50,7 +50,7 @@ const columns: GridColDef[] = [
             "Unassigned"
           ) : (
             <Image
-              src={`/${projectManager?.profilePictureUrl}`}
+              src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${projectManager?.profilePictureUrl}`}
               alt={projectManager?.username}
               width={100}
               height={50}

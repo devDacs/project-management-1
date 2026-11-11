@@ -64,7 +64,12 @@ const Sidebar = () => {
 
         {/* TEAM */}
         <div className="flex items-center gap-5 border-y-[1.5px] border-gray-200 px-8 py-4 dark:border-gray-700">
-          <Image src="/logo.jpg" alt="Logo" width={40} height={40} />
+          <Image
+            src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/logo.jpg`}
+            alt="Logo"
+            width={40}
+            height={40}
+          />
 
           <div>
             <h3 className="text-md font-bold tracking-wide dark:text-gray-200">

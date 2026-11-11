@@ -29,8 +29,8 @@ const TaskCard = ({
           <strong>Attachments:</strong>
           <div className="flex flex-wrap">
             <Image
-              src={`/${attachments[0].fileURL}`}
-              alt={`/${attachments[0].fileName}`}
+              src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${attachments[0].fileURL}`}
+              alt={attachments[0].fileName}
               width={400}
               height={200}
               className="h-auto w-full rounded-t-md"
